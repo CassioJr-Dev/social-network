@@ -1,12 +1,12 @@
-import { $Enums, User } from "@/shared/config/database/generated/prisma";
+import { $Enums, User } from "@prisma/client";
 
 export class UserEntity implements User {
-  user: string;
+  name: string;
   userId: string;
   email: string;
   password: string;
-  birthDate: Date;
-  profilePicture: string;
+  birthDate: Date | null;
+  profilePicture: string | null;
   privacy: $Enums.Privacy;
   status: $Enums.UserStatus;
   createdAt: Date;
