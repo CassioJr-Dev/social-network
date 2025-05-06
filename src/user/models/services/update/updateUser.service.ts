@@ -2,6 +2,7 @@ import { NotFoundError } from '@/shared/errors/not-found-error'
 import { UserDao } from '../../dao/user.dao'
 import { UserEntity } from '../../entities/user.entity'
 import { BadRequestError } from '@/shared/errors/bad-request-error'
+import { UnprocessableEntityError } from '@/shared/errors/unprocessable-entity-error'
 
 export class UpdateUserService {
   constructor(private userDao: UserDao) {}
@@ -19,6 +20,31 @@ export class UpdateUserService {
       throw new NotFoundError('User not found')
     }
 
+    if (user.email) {
+      const existingUserWithEmail = await this.userDao.findUserByEmail(
+        user.email,
+      )
+
+      if (
+        existingUserWithEmail &&
+        existingUserWithEmail.userId !== user.userId
+      ) {
+        throw new UnprocessableEntityError('Email already exists')
+      }
+
+      if (
+        existingUserWithEmail &&
+        existingUserWithEmail.userId === user.userId
+      ) {
+        throw new BadRequestError('Email already in use')
+      }
+    }
+
+    if (user.password) {
+      if (existingUser.password === user.password) {
+        throw new UnprocessableEntityError('Password already in use')
+      }
+    }
     return await this.userDao.updateUser(user)
   }
 

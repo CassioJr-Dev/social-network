@@ -10,7 +10,7 @@ export class CreateUserService {
     const existingUser = await this.userDao.findUserByEmail(user.email)
 
     if (existingUser) {
-      throw new UnprocessableEntityError('User already exists')
+      throw new UnprocessableEntityError('Email already exists')
     }
 
     return await this.userDao.createUser(user)
