@@ -1,12 +1,12 @@
-import { PrismaClient } from "@prisma/client";
-import { UserEntity } from "../entities/user.entity";
+import { PrismaClient } from '@prisma/client'
+import { UserEntity } from '../entities/user.entity'
 
 export class UserDao {
-  constructor(private prismaService: PrismaClient){}
+  constructor(private prismaService: PrismaClient) {}
 
   async createUser(user: UserEntity): Promise<UserEntity> {
     return this.prismaService.user.create({
-      data: user
+      data: user,
     })
   }
 
@@ -14,8 +14,8 @@ export class UserDao {
     const update = await this.prismaService.user.update({
       data: user,
       where: {
-        userId: user.userId
-      }
+        userId: user.userId,
+      },
     })
 
     return update
@@ -24,24 +24,24 @@ export class UserDao {
   async findUserById(userId: string): Promise<UserEntity | null> {
     return await this.prismaService.user.findUnique({
       where: {
-        userId
-      }
+        userId,
+      },
     })
   }
 
   async findUserByEmail(email: string): Promise<UserEntity | null> {
     return await this.prismaService.user.findUnique({
       where: {
-        email
-      }
+        email,
+      },
     })
   }
 
   async deleteUser(userId: string): Promise<void> {
     await this.prismaService.user.delete({
       where: {
-        userId
-      }
+        userId,
+      },
     })
   }
 }

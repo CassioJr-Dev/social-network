@@ -7,4 +7,3 @@ export class BadRequestError extends Error {
     this.statusCode = statusCode || 400
   }
 }
-
