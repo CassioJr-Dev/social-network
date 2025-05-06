@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId         String     @id @unique @db.Text
+  user           String     @db.VarChar(255)
+  email          String     @unique
+  password       String     @db.VarChar(255)
+  birthDate      DateTime?
+  profilePicture String?    @db.Text
+  privacy        Privacy    @default(PUBLIC)
+  status         UserStatus @default(ACTIVE)
+  createdAt      DateTime   @default(now())
+
+  posts                Post[]
+  comments             Comment[]
+  likes                Like[]
+  sentMessages         DirectMessage[] @relation("SentMessages")
+  receivedMessages     DirectMessage[] @relation("ReceivedMessages")
+  friendshipsRequested Friendship[]    @relation("FriendshipsRequested")
+  friendshipsReceived  Friendship[]    @relation("FriendshipsReceived")
+  userGroups           UserGroup[]
+}
+
+model Post {
+  postId    String   @id @unique @db.Text
+  title     String   @db.VarChar(255)
+  content   String   @db.Text
+  authorId  String   @db.Text
+  privacy   Privacy  @default(PUBLIC)
+  createdAt DateTime @default(now())
+
+  author   User      @relation(fields: [authorId], references: [userId])
+  comments Comment[]
+  likes    Like[]
+}
+
+model Comment {
+  commentId String   @id @unique @db.Text
+  content   String   @db.Text
+  authorId  String   @db.Text
+  postId    String   @db.Text
+  createdAt DateTime @default(now())
+
+  author User @relation(fields: [authorId], references: [userId])
+  post   Post @relation(fields: [postId], references: [postId])
+}
+
+model Like {
+  likeId    String   @id @unique @db.Text
+  userId    String   @db.Text
+  postId    String   @db.Text
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [userId])
+  post Post @relation(fields: [postId], references: [postId])
+}
+
+model Friendship {
+  friendId    String           @id @unique @db.Text
+  requesterId String           @db.Text
+  addresseeId String           @db.Text
+  status      FriendshipStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+
+  requester User @relation("FriendshipsRequested", fields: [requesterId], references: [userId])
+  addressee User @relation("FriendshipsReceived", fields: [addresseeId], references: [userId])
+}
+
+model DirectMessage {
+  directMessageId String   @id @unique @db.Text
+  senderId        String   @db.Text
+  receiverId      String   @db.Text
+  content         String   @db.Text
+  createdAt       DateTime @default(now())
+
+  sender   User @relation("SentMessages", fields: [senderId], references: [userId])
+  receiver User @relation("ReceivedMessages", fields: [receiverId], references: [userId])
+}
+
+model Group {
+  groupId     String   @id @unique @db.Text
+  name        String   @db.VarChar(255)
+  description String?  @db.VarChar(255)
+  privacy     Privacy  @default(PUBLIC)
+  createdAt   DateTime @default(now())
+
+  members UserGroup[]
+}
+
+model UserGroup {
+  userGroupId String   @id @unique @db.Text
+  userId      String   @db.Text
+  groupId     String   @db.Text
+  isAdmin     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [userId])
+  group Group @relation(fields: [groupId], references: [groupId])
+}
+
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+  BLOCKED
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum Privacy {
+  PUBLIC
+  PRIVATE
+}
