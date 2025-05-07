@@ -1,6 +1,6 @@
-import { CreateUserDto } from '@/user/dtos/create.user.dto'
-import { UserEntity } from '@/user/models/entities/user.entity'
-import { CreateUserService } from '@/user/models/services/create/createUser.service'
+import { CreateUserDto } from '../../dtos/create.user.dto'
+import { UserEntity } from '../../models/entities/user.entity'
+import { CreateUserService } from '../../models/services/create/createUser.service'
 import { $Enums } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
 

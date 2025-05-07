@@ -1,4 +1,4 @@
-import { NotFoundError } from '@/shared/errors/not-found-error'
+import { NotFoundError } from '../../../../shared/errors/not-found-error'
 import { UserDao } from '../../dao/user.dao'
 
 export class DeleteUserService {

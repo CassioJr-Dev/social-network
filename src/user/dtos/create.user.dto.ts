@@ -1,6 +1,8 @@
 import { $Enums } from '@prisma/client'
+
 import {
   IsDate,
+  IsDateString,
   IsEmail,
   IsIn,
   IsNotEmpty,
@@ -23,7 +25,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   birthDate: Date | null
 
@@ -32,10 +34,9 @@ export class CreateUserDto {
   profilePicture: string | null
 
   @MaxLength(6)
-  @IsIn([$Enums.Privacy], {
+  @IsIn([$Enums.Privacy.PUBLIC, $Enums.Privacy.PRIVATE], {
     message: 'privacy must be a valid value: PUBLIC OR PRIVATE.',
   })
-  @IsNotEmpty()
   @IsNotEmpty()
   privacy: $Enums.Privacy
 }

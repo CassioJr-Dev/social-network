@@ -1,5 +1,5 @@
 import { UserEntity } from '../../entities/user.entity'
-import { UnprocessableEntityError } from '@/shared/errors/unprocessable-entity-error'
+import { UnprocessableEntityError } from '../../../../shared/errors/unprocessable-entity-error'
 import { IUserDao } from '../../dao/interface.dao'
 
 export class CreateUserService {

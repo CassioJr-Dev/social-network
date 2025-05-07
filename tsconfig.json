@@ -9,12 +9,8 @@
     "target": "ES2022",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
+    "baseUrl": "src",
+
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
