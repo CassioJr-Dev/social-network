@@ -1,11 +1,11 @@
 import { NotFoundError } from '@/shared/errors/not-found-error'
-import { UserDao } from '../../dao/user.dao'
 import { UserEntity } from '../../entities/user.entity'
 import { BadRequestError } from '@/shared/errors/bad-request-error'
 import { UnprocessableEntityError } from '@/shared/errors/unprocessable-entity-error'
+import { IUserDao } from '../../dao/interface.dao'
 
 export class UpdateUserService {
-  constructor(private userDao: UserDao) {}
+  constructor(private userDao: IUserDao) {}
 
   async execute(user: Partial<UserEntity>): Promise<UserEntity> {
     const existingUser = await this.userDao.findUserById(user.userId)

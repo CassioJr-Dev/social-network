@@ -1,10 +1,9 @@
-import { NotFoundError } from '@/shared/errors/not-found-error'
-import { UserDao } from '../../dao/user.dao'
 import { UserEntity } from '../../entities/user.entity'
 import { UnprocessableEntityError } from '@/shared/errors/unprocessable-entity-error'
+import { IUserDao } from '../../dao/interface.dao'
 
 export class CreateUserService {
-  constructor(private userDao: UserDao) {}
+  constructor(private userDao: IUserDao) {}
 
   async execute(user: UserEntity): Promise<UserEntity> {
     const existingUser = await this.userDao.findUserByEmail(user.email)
@@ -13,6 +12,6 @@ export class CreateUserService {
       throw new UnprocessableEntityError('Email already exists')
     }
 
-    return await this.userDao.createUser(user)
+    return this.userDao.createUser(user)
   }
 }
