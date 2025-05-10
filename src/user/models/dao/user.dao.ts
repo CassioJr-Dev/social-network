@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { UserEntity } from '../entities/user.entity'
+import { IUserDao } from './interface.dao'
 
-export class UserDao {
+export class UserDao implements IUserDao {
   constructor(private prismaService: PrismaClient) {}
 
   async createUser(user: UserEntity): Promise<UserEntity> {

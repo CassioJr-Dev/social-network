@@ -9,14 +9,14 @@ export class GetUserService {
     try {
       const user = await this.userDao.findUserById(userId)
 
-    if (!user) {
-      throw new NotFoundError('User not found')
-    }
-    delete user.password
+      if (!user) {
+        throw new NotFoundError('User not found')
+      }
+      delete user.password
 
-    return user
+      return user
     } catch (error) {
-      throw(error)
+      throw error
     }
   }
 }

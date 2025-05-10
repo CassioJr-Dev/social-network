@@ -27,7 +27,7 @@ router.put(
     const { body, params } = req
 
     if (!isUUID(params.id)) {
-      res.status(400).json({ error: 'invalid id' });
+      res.status(400).json({ error: 'invalid id' })
       return
     }
 
@@ -40,10 +40,10 @@ router.put(
 router.delete('/user/:id', async (req, res, next) => {
   const { params } = req
 
-    if (!isUUID(params.id)) {
-      res.status(400).json({ error: 'invalid id' });
-      return
-    }
+  if (!isUUID(params.id)) {
+    res.status(400).json({ error: 'invalid id' })
+    return
+  }
 
   const deleteUserController = new DeleteUserController()
   await deleteUserController.handle(params.id, next)
@@ -53,10 +53,10 @@ router.delete('/user/:id', async (req, res, next) => {
 router.get('/user/:id', async (req, res, next) => {
   const { params } = req
 
-    if (!isUUID(params.id)) {
-      res.status(400).json({ error: 'invalid id' });
-      return
-    }
+  if (!isUUID(params.id)) {
+    res.status(400).json({ error: 'invalid id' })
+    return
+  }
 
   const getUserController = new GetUserController()
   const result = await getUserController.handle(params.id, next)

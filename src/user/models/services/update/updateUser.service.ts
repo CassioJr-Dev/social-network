@@ -11,66 +11,66 @@ export class UpdateUserService {
     private hashProvider: AdapterHashProvider,
   ) {}
 
-  async execute(userId: string, userEntity: Partial<UserEntity>): Promise<UserEntity> {
+  async execute(
+    userId: string,
+    userEntity: Partial<UserEntity>,
+  ): Promise<UserEntity> {
     try {
       const existingUser = await this.userDao.findUserById(userId)
 
-    const hasAtLeastOneProperty = this.hasAtLeastOneProperty(userEntity)
+      const hasAtLeastOneProperty = this.hasAtLeastOneProperty(userEntity)
 
-    if (!hasAtLeastOneProperty) {
-      throw new BadRequestError('At least one property must be provided')
-    }
-
-    if (!existingUser) {
-      throw new NotFoundError('User not found')
-    }
-
-    if (userEntity.email) {
-      const existingUserWithEmail = await this.userDao.findUserByEmail(
-        userEntity.email,
-      )
-
-      if (
-        existingUserWithEmail &&
-        existingUserWithEmail.userId !== userId
-      ) {
-        throw new UnprocessableEntityError('Email already exists')
+      if (!hasAtLeastOneProperty) {
+        throw new BadRequestError('At least one property must be provided')
       }
 
-      if (
-        existingUserWithEmail &&
-        existingUserWithEmail.userId === userId
-      ) {
-        throw new BadRequestError('Email already in use')
-      }
-    }
-
-    if (userEntity.password) {
-      const comparePassword = await this.hashProvider.compareHash(
-        userEntity.password,
-        existingUser.password,
-      )
-
-      if (comparePassword) {
-        throw new UnprocessableEntityError('Password already in use')
+      if (!existingUser) {
+        throw new NotFoundError('User not found')
       }
 
-      const hashedPassword = await this.hashProvider.generateHash(userEntity.password)
+      if (userEntity.email) {
+        const existingUserWithEmail = await this.userDao.findUserByEmail(
+          userEntity.email,
+        )
 
-      existingUser.password = hashedPassword
-    }
+        if (existingUserWithEmail && existingUserWithEmail.userId !== userId) {
+          throw new UnprocessableEntityError('Email already exists')
+        }
 
-    if (userEntity.birthDate) {
+        if (existingUserWithEmail && existingUserWithEmail.userId === userId) {
+          throw new BadRequestError('Email already in use')
+        }
+      }
+
+      if (userEntity.password) {
+        const comparePassword = await this.hashProvider.compareHash(
+          userEntity.password,
+          existingUser.password,
+        )
+
+        if (comparePassword) {
+          throw new UnprocessableEntityError('Password already in use')
+        }
+
+        const hashedPassword = await this.hashProvider.generateHash(
+          userEntity.password,
+        )
+
+        existingUser.password = hashedPassword
+      }
+
+      if (userEntity.birthDate) {
         userEntity.birthDate = new Date(userEntity.birthDate)
       }
 
-
-      const updatedUser = await this.userDao.updateUser(Object.assign(existingUser, userEntity))
+      const updatedUser = await this.userDao.updateUser(
+        Object.assign(existingUser, userEntity),
+      )
       delete updatedUser.password
 
       return updatedUser
     } catch (error) {
-      throw(error)
+      throw error
     }
   }
 

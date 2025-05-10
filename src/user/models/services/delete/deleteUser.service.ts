@@ -8,13 +8,13 @@ export class DeleteUserService {
     try {
       const user = await this.userDao.findUserById(userId)
 
-    if (!user) {
-      throw new NotFoundError('User not found')
-    }
+      if (!user) {
+        throw new NotFoundError('User not found')
+      }
 
-    await this.userDao.deleteUser(userId)
+      await this.userDao.deleteUser(userId)
     } catch (error) {
-      throw(error)
+      throw error
     }
   }
 }

@@ -1,9 +1,18 @@
+import {
+  ISearchParams,
+  ISearchResult,
+} from '@/shared/models/dao/searchType'
 import { PostEntity } from '../entities/post.entity'
 
 export interface IPostDao {
+  sortableFields: string[]
+
   createPost(post: PostEntity): Promise<PostEntity>
   updatePost(post: Partial<PostEntity>): Promise<PostEntity>
   findPostById(postId: string): Promise<PostEntity | null>
-  findAllPostsByAuthorId(authorId: string): Promise<PostEntity[]>
+  search(
+    authorId: string,
+    props: ISearchParams,
+  ): Promise<ISearchResult<PostEntity>>
   deletePost(postId: string): Promise<void>
 }

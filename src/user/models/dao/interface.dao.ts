@@ -5,4 +5,5 @@ export interface IUserDao {
   updateUser(user: Partial<UserEntity>): Promise<UserEntity>
   findUserById(userId: string): Promise<UserEntity | null>
   findUserByEmail(email: string): Promise<UserEntity | null>
+  deleteUser(userId: string): Promise<void>
 }
