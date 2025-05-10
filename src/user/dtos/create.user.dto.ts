@@ -33,7 +33,6 @@ export class CreateUserDto {
   @IsOptional()
   profilePicture: string | null
 
-  @MaxLength(6)
   @IsIn([$Enums.Privacy.PUBLIC, $Enums.Privacy.PRIVATE], {
     message: 'privacy must be a valid value: PUBLIC OR PRIVATE.',
   })

@@ -6,6 +6,11 @@ import { Request, Response, NextFunction } from 'express'
 export class ValidateMiddleware {
   static validateDto(dtoClass: any) {
     return async (req: Request, res: Response, next: NextFunction) => {
+      if (!req.body) {
+        res.status(400).json({ error: 'The request body is mandatory' });
+        return
+      }
+
       const dtoObj = plainToInstance(dtoClass, req.body)
       const errors = await validate(dtoObj, { whitelist: true })
 
