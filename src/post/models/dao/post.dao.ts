@@ -1,10 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { IPostDao } from './interface.dao'
 import { PostEntity } from '../entities/post.entity'
-import {
-  ISearchParams,
-  ISearchResult,
-} from '@/shared/models/dao/searchType'
+import { ISearchParams, ISearchResult } from '@/shared/models/dao/searchType'
 
 export class PostDao implements IPostDao {
   readonly sortableFields: string[] = ['title', 'createdAt']
@@ -16,9 +13,13 @@ export class PostDao implements IPostDao {
       data: post,
     })
   }
-  async updatePost(post: Partial<PostEntity>): Promise<PostEntity> {
+  async updatePost(
+    postId: string,
+    authorId: string,
+    post: Partial<PostEntity>,
+  ): Promise<PostEntity> {
     return this.prismaService.post.update({
-      where: { postId: post.postId },
+      where: { postId, authorId },
       data: post,
     })
   }
@@ -27,9 +28,9 @@ export class PostDao implements IPostDao {
       where: { postId },
     })
   }
-  async deletePost(postId: string): Promise<void> {
+  async deletePost(postId: string, authorId: string): Promise<void> {
     await this.prismaService.post.delete({
-      where: { postId },
+      where: { postId, authorId },
     })
   }
 
@@ -56,6 +57,12 @@ export class PostDao implements IPostDao {
       },
       skip: props.page && props.page > 0 ? (props.page - 1) * props.perPage : 1,
       take: props.perPage && props.perPage > 0 ? props.perPage : 15,
+    })
+
+    const findTeste = await this.prismaService.user.findMany({
+      where: {
+        userId: authorId,
+      },
     })
 
     return {

@@ -13,29 +13,29 @@ export class UpdateUserDto {
   @MaxLength(255)
   @IsString()
   @IsOptional()
-  name: string
+  name?: string
 
   @IsEmail()
   @IsOptional()
-  email: string
+  email?: string
 
   @IsString()
   @IsOptional()
-  password: string
+  password?: string
 
   @IsDateString()
   @IsOptional()
-  birthDate: Date | null
+  birthDate?: Date
 
   @IsString()
   @IsOptional()
-  profilePicture: string | null
+  profilePicture?: string
 
   @IsIn([$Enums.Privacy.PUBLIC, $Enums.Privacy.PRIVATE], {
     message: 'privacy must be a valid value: PUBLIC OR PRIVATE.',
   })
   @IsOptional()
-  privacy: $Enums.Privacy
+  privacy?: $Enums.Privacy
 
   @IsIn(
     [
@@ -48,5 +48,5 @@ export class UpdateUserDto {
     },
   )
   @IsOptional()
-  status: $Enums.UserStatus
+  status?: $Enums.UserStatus
 }

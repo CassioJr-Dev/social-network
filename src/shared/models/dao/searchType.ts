@@ -3,7 +3,7 @@ export type ISearchParams<Filter = string> = {
   perPage: number
   sort: string
   sortDir: string
-  filter: Filter
+  filter?: Filter
 }
 
 export type ISearchResult<T> = {

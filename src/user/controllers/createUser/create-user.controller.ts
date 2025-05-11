@@ -18,18 +18,8 @@ export class CreateUserController {
         new UserDao(prisma),
         new AdapterHashProvider(),
       )
-      const createdAt = new Date()
-      const status = $Enums.UserStatus.ACTIVE
-      const userId = randomUUID()
 
-      const createUser = await createUserService.execute(
-        Object.assign(new UserEntity(), createUserDto, {
-          userId,
-          createdAt,
-          status,
-        }),
-      )
-      return createUser
+      return createUserService.execute(createUserDto)
     } catch (error) {
       next(error)
     }
