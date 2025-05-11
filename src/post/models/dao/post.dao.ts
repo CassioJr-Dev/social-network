@@ -59,12 +59,6 @@ export class PostDao implements IPostDao {
       take: props.perPage && props.perPage > 0 ? props.perPage : 15,
     })
 
-    const findTeste = await this.prismaService.user.findMany({
-      where: {
-        userId: authorId,
-      },
-    })
-
     return {
       items: models,
       total: count,
