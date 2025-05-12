@@ -1,6 +1,6 @@
-import { IUserDao } from '@/user/models/dao/interface.dao'
+import { IUserDao } from '@/user/models/dao/interfaceUser.dao'
 import { NotFoundError } from '../../../../shared/errors/not-found-error'
-import { IPostDao } from '../../dao/interface.dao'
+import { IPostDao } from '../../dao/interfacePost.dao'
 import { ForbiddenError } from '@/shared/errors/forbidden-error'
 import { $Enums, UserStatus } from '@prisma/client'
 

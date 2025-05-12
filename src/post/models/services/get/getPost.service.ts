@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../../../shared/errors/not-found-error'
 import { PostEntity } from '../../entities/post.entity'
-import { IPostDao } from '../../dao/interface.dao'
+import { IPostDao } from '../../dao/interfacePost.dao'
 
 export class GetPostService {
   constructor(private postDao: IPostDao) {}

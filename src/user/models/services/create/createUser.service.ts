@@ -1,6 +1,6 @@
 import { UserEntity } from '../../entities/user.entity'
 import { UnprocessableEntityError } from '../../../../shared/errors/unprocessable-entity-error'
-import { IUserDao } from '../../dao/interface.dao'
+import { IUserDao } from '../../dao/interfaceUser.dao'
 import { AdapterHashProvider } from '../../../../shared/services/passwordHash.service'
 import { $Enums } from '@prisma/client'
 import { randomUUID } from 'node:crypto'

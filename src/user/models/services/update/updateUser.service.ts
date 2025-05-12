@@ -2,7 +2,7 @@ import { NotFoundError } from '../../../../shared/errors/not-found-error'
 import { UserEntity } from '../../entities/user.entity'
 import { BadRequestError } from '../../../../shared/errors/bad-request-error'
 import { UnprocessableEntityError } from '../../../../shared/errors/unprocessable-entity-error'
-import { IUserDao } from '../../dao/interface.dao'
+import { IUserDao } from '../../dao/interfaceUser.dao'
 import { AdapterHashProvider } from '../../../../shared/services/passwordHash.service'
 
 export class UpdateUserService {

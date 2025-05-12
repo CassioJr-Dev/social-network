@@ -1,6 +1,6 @@
 import { PostDao } from '@/post/models/dao/post.dao'
 import { PostEntity } from '@/post/models/entities/post.entity'
-import { SearchPostsService } from '@/post/models/services/search/getPost.service'
+import { SearchPostsService } from '@/post/models/services/search/searchPost.service'
 import prisma from '@/shared/config/database/prisma.service'
 import { ISearchParams, ISearchResult } from '@/shared/models/dao/searchType'
 import { UserDao } from '@/user/models/dao/user.dao'

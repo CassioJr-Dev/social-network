@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { IPostDao } from './interface.dao'
+import { IPostDao } from './interfacePost.dao'
 import { PostEntity } from '../entities/post.entity'
 import { ISearchParams, ISearchResult } from '@/shared/models/dao/searchType'
 
@@ -40,7 +40,9 @@ export class PostDao implements IPostDao {
   ): Promise<ISearchResult<PostEntity>> {
     const sortable = this.sortableFields?.includes(props.sort) || false
     const orderByField = sortable ? props.sort : 'createdAt'
-    const orderByDir = sortable ? props.sortDir : 'desc'
+    const orderByDir = props.sortDir ? props.sortDir : 'desc'
+    const page = props.page && props.page > 0 ? props.page : 1
+    const perPage = props.perPage && props.perPage > 0 ? props.perPage : 15
 
     const count = await this.prismaService.post.count({
       where: {
@@ -55,15 +57,15 @@ export class PostDao implements IPostDao {
       orderBy: {
         [orderByField]: orderByDir,
       },
-      skip: props.page && props.page > 0 ? (props.page - 1) * props.perPage : 1,
-      take: props.perPage && props.perPage > 0 ? props.perPage : 15,
+      skip: (page - 1) * perPage,
+      take: perPage,
     })
 
     return {
       items: models,
       total: count,
-      currentPage: props.page,
-      perPage: props.perPage,
+      currentPage: page,
+      perPage: perPage,
       sort: orderByField,
       sortDir: orderByDir,
     }

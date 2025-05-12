@@ -1,9 +1,9 @@
 import { NotFoundError } from '../../../../shared/errors/not-found-error'
 import { BadRequestError } from '../../../../shared/errors/bad-request-error'
-import { IPostDao } from '../../dao/interface.dao'
+import { IPostDao } from '../../dao/interfacePost.dao'
 import { $Enums, UserStatus } from '@prisma/client'
 import { PostEntity } from '../../entities/post.entity'
-import { IUserDao } from '@/user/models/dao/interface.dao'
+import { IUserDao } from '@/user/models/dao/interfaceUser.dao'
 import { ForbiddenError } from '@/shared/errors/forbidden-error'
 
 export type UpdatePostType = {

@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { UserEntity } from '../entities/user.entity'
-import { IUserDao } from './interface.dao'
+import { IUserDao } from './interfaceUser.dao'
 
 export class UserDao implements IUserDao {
   constructor(private prismaService: PrismaClient) {}
