@@ -32,9 +32,27 @@ export class FriendShipDao implements IFriendShipDao {
     })
   }
 
-  async findFriendShipById(friendId: string): Promise<FriendShipEntity | null> {
+  async findFriendShip(
+    requesterId: string,
+    addresseeId: string,
+  ): Promise<FriendShipEntity | null> {
+    return this.prismaService.friendship.findFirst({
+      where: {
+        requesterId,
+        addresseeId,
+      },
+    })
+  }
+
+  async findFriendShipById(
+    friendId: string,
+    userId: string,
+  ): Promise<FriendShipEntity | null> {
     return this.prismaService.friendship.findUnique({
-      where: { friendId },
+      where: {
+        friendId,
+        OR: [{ addresseeId: userId }, { requesterId: userId }],
+      },
     })
   }
 
@@ -107,10 +125,6 @@ export class FriendShipDao implements IFriendShipDao {
           },
         ],
       },
-      include: {
-        requester: true,
-        addressee: true,
-      },
       orderBy: {
         [orderByField]: orderByDir,
       },
@@ -134,6 +148,15 @@ export class FriendShipDao implements IFriendShipDao {
       where: {
         addresseeId,
         status: 'PENDING',
+      },
+    })
+  }
+
+  async listFriendsBlocked(userId: string): Promise<FriendShipEntity[]> {
+    return this.prismaService.friendship.findMany({
+      where: {
+        addresseeId: userId,
+        status: 'BLOCKED',
       },
     })
   }

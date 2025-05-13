@@ -6,17 +6,29 @@ export interface IFriendShipDao {
   sortableFields: string[]
 
   createFriendShip(friendShip: FriendShipEntity): Promise<FriendShipEntity>
+
   updateStatus(
     friendId: string,
     status: $Enums.FriendshipStatus,
   ): Promise<FriendShipEntity>
-  findFriendShipById(friendId: string): Promise<FriendShipEntity | null>
+
+  findFriendShip(
+    requesterId: string,
+    addresseeId: string,
+  ): Promise<FriendShipEntity | null>
+
+  findFriendShipById(
+    friendId: string,
+    userId: string,
+  ): Promise<FriendShipEntity | null>
   searchFriends(
     userId: string,
     props: ISearchParams,
   ): Promise<ISearchResult<FriendShipEntity>>
 
+  listFriendsBlocked(userId: string): Promise<FriendShipEntity[]>
+
   listFriendRequests(addresseeId: string): Promise<FriendShipEntity[]>
 
-  deleteFriendShip(friendShipId: string, userId: string): Promise<void>
+  deleteFriendShip(friendId: string, userId: string): Promise<void>
 }

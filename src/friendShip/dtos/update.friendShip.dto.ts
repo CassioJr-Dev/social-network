@@ -1,17 +1,10 @@
-import { $Enums } from "@prisma/client"
-import { IsIn, IsNotEmpty, IsString } from "class-validator"
+import { $Enums } from '@prisma/client'
+import { IsIn, IsNotEmpty, IsString } from 'class-validator'
 export class UpdateFriendShipDto {
   @IsNotEmpty()
   @IsString()
-  @IsIn(
-    [
-      $Enums.FriendshipStatus.PENDING,
-      $Enums.FriendshipStatus.ACCEPTED,
-      $Enums.FriendshipStatus.BLOCKED,
-    ],
-    {
-      message: 'status must be a valid value: ACTIVE, INACTIVE OR BLOCKED.',
-    },
-  )
+  @IsIn([$Enums.FriendshipStatus.ACCEPTED, $Enums.FriendshipStatus.BLOCKED], {
+    message: 'status must be a valid value: ACCEPTED OR BLOCKED.',
+  })
   status: $Enums.FriendshipStatus
 }

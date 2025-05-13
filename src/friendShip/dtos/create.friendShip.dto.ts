@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUUID } from "class-validator"
+import { IsNotEmpty, IsString, IsUUID } from 'class-validator'
 
 export class CreateFriendShipDto {
   @IsNotEmpty()
@@ -11,4 +11,3 @@ export class CreateFriendShipDto {
   @IsUUID()
   requesterId: string
 }
-

@@ -11,10 +11,6 @@ import { DeleteFriendShipController } from '../controllers/deleteFriendShip/dele
 import { GetFriendController } from '../controllers/getFriendShip/get-friendShip.controller'
 import { SearchFriendShipController } from '../controllers/searchFriendShip/search-friendShip.controller'
 import { FindAllRequestsController } from '../controllers/findAllRequests/findAll-requests.controller'
-import { FindAllFriendsBlockedService } from '../models/services/friendsBlocked/findallFriendsBlocked.service'
-import { FriendShipDao } from '../models/dao/friendShip.dao'
-import { UserDao } from '@/user/models/dao/user.dao'
-import prisma from '@/shared/config/database/prisma.service'
 import { GetFriendsBlockedController } from '../controllers/friendsBlocked/get-friendsBlocked.controller'
 
 const router = Router()
@@ -67,7 +63,6 @@ router.delete('/friendShip/:userId/:friendShipId', async (req, res, next) => {
 
 router.get('/friendShip/:userId/:friendShipId', async (req, res, next) => {
   const { params } = req
-
   if (!isUUID(params.userId) || !isUUID(params.friendShipId)) {
     res.status(400).json({ error: 'invalid id' })
     return
@@ -75,16 +70,15 @@ router.get('/friendShip/:userId/:friendShipId', async (req, res, next) => {
 
   const getFriendShip = new GetFriendController()
   const result = await getFriendShip.handle(
-    params.userId,
     params.friendShipId,
+    params.userId,
     next,
   )
   res.status(200).json(result)
 })
 
-router.get('/friendShip/:userId', async (req, res, next) => {
+router.get('/friendShipRequests/:userId', async (req, res, next) => {
   const { params } = req
-
   if (!isUUID(params.userId)) {
     res.status(400).json({ error: 'invalid id' })
     return
@@ -95,9 +89,8 @@ router.get('/friendShip/:userId', async (req, res, next) => {
   res.status(200).json(result)
 })
 
-router.get('/friendShip/blocked/:userId', async (req, res, next) => {
+router.get('/blocked/friendShip/:userId', async (req, res, next) => {
   const { params } = req
-
   if (!isUUID(params.userId)) {
     res.status(400).json({ error: 'invalid id' })
     return
@@ -109,12 +102,12 @@ router.get('/friendShip/blocked/:userId', async (req, res, next) => {
 })
 
 router.get(
-  '/friendShip/search/:userId',
+  '/search/friendShip/:userId',
   ValidateQueryParamsMiddleware.validateDto(SearchParamsDto),
   async (req, res, next) => {
     const { params } = req
 
-    if (!isUUID(params.authorId)) {
+    if (!isUUID(params.userId)) {
       res.status(400).json({ error: 'invalid id' })
       return
     }

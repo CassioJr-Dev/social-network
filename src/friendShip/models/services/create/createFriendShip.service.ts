@@ -54,12 +54,12 @@ export class CreateFriendShipService {
       if (findFriendShip) {
         throw new BadRequestError('Friendship already exists')
       }
-      const friendShipId = randomUUID()
+      const friendId = randomUUID()
       const createdAt = new Date()
       const status = $Enums.FriendshipStatus.PENDING
 
       const newFriendShip = Object.assign(new FriendShipEntity(), {
-        friendShipId,
+        friendId,
         requesterId: friendShip.requesterId,
         addresseeId: friendShip.addresseeId,
         status,
