@@ -19,7 +19,6 @@ export class GetAllLikesService {
 
       const likes = await this.likeDao.findAllLikes(postId)
 
-
       return likes
     } catch (error) {
       throw error

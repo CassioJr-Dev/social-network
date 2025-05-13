@@ -34,7 +34,7 @@ export class CreateLikeService {
         throw new NotFoundError('Post not found')
       }
 
-        const inactiveStatuses: UserStatus[] = [
+      const inactiveStatuses: UserStatus[] = [
         $Enums.UserStatus.INACTIVE,
         $Enums.UserStatus.BLOCKED,
       ]
