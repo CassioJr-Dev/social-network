@@ -17,6 +17,13 @@ export class LikeDao implements ILikeDao {
       },
     })
   }
+  async findLikeById(likeId: string): Promise<LikeEntity | null> {
+    return this.prismaService.like.findUnique({
+      where: {
+        likeId,
+      },
+    })
+  }
   async removeLike(likeId: string): Promise<void> {
     await this.prismaService.like.delete({
       where: {
