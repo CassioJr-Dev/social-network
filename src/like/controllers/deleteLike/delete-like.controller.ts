@@ -2,7 +2,7 @@ import prisma from '../../../shared/config/database/prisma.service'
 import { NextFunction } from 'express'
 import { PostDao } from '@/post/models/dao/post.dao'
 import { DeleteLikeService } from '@/like/models/services/delete/deleteLike.service'
-import { LikeDao } from '@/like/models/dao/user.dao'
+import { LikeDao } from '@/like/models/dao/like.dao'
 
 export class DeleteLikeController {
   async handle(

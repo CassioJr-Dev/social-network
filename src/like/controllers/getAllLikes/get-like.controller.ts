@@ -3,7 +3,7 @@ import prisma from '../../../shared/config/database/prisma.service'
 import { GetAllLikesService } from '../../models/services/getAll/getAllLikes.service'
 import { NextFunction } from 'express'
 import { LikeEntity } from '@/like/models/entities/like.entity'
-import { LikeDao } from '@/like/models/dao/user.dao'
+import { LikeDao } from '@/like/models/dao/like.dao'
 
 export class GetAllLikesController {
   async handle(postId: string, next: NextFunction): Promise<LikeEntity[]> {
